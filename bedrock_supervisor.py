@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 
-from multi_agent_orchestrator.agents import (
+from agent_squad.agents import (
     BedrockLLMAgent,
     BedrockLLMAgentOptions,
     AmazonBedrockAgent,
@@ -57,6 +57,8 @@ ticket_agent = AmazonBedrockAgent(AmazonBedrockAgentOptions(
 ))
 
 steak_supervisor_agent = SupervisorAgent(SupervisorAgentOptions(
+    name="Steakhouse supervisor agent",
+    description="Supervisor agent in charge of a Steakhouse enterprise, acts as the supervisor agent",
     lead_agent=BedrockLLMAgent(BedrockLLMAgentOptions(
         name="Supervisor",
         description="Supervisor agent in charge of a Steakhouse enterprise, acts as the supervisor agent",

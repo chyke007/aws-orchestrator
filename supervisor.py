@@ -1,4 +1,4 @@
-from multi_agent_orchestrator.agents import (BedrockLLMAgent,
+from agent_squad.agents import (BedrockLLMAgent,
                                              BedrockLLMAgentOptions,
                                              AgentCallbacks,
                                              SupervisorAgent,
@@ -13,18 +13,18 @@ class BedrockLLMAgentCallbacks(AgentCallbacks):
 ticket_agent = BedrockLLMAgent(BedrockLLMAgentOptions(
             name="Ticket Agent",
             description="Creates a ticket about customer issues",
-            callbacks=BedrockLLMAgentCallbacks(),
-            streaming=True
+            callbacks=BedrockLLMAgentCallbacks()
         ))
     
 credit_card_agent = BedrockLLMAgent(BedrockLLMAgentOptions(
             name="Credit Card Agent",
             description="Handles card issues, asks for customer card details when needed",
-            callbacks=BedrockLLMAgentCallbacks(),
-            streaming=True
+            callbacks=BedrockLLMAgentCallbacks()
         ))
 
 supervisor_agent = SupervisorAgent(SupervisorAgentOptions(
+    name="Supervisor Agent",
+    description="Coordinates support inquiries",
     lead_agent=BedrockLLMAgent(BedrockLLMAgentOptions(
         name="Support Team Lead",
         description="Coordinates support inquiries"

@@ -2,14 +2,13 @@ import uuid
 import asyncio
 import sys
 from bedrock_supervisor import (steak_supervisor_agent, steak_supervisor_agent_single)
-
-from multi_agent_orchestrator.orchestrator import MultiAgentOrchestrator, OrchestratorConfig
-from multi_agent_orchestrator.agents import (BedrockLLMAgent,
+from agent_squad.orchestrator import AgentSquad, AgentSquadConfig
+from agent_squad.agents import (BedrockLLMAgent,
  BedrockLLMAgentOptions,
  AgentResponse,
  AgentCallbacks)
 
-orchestrator = MultiAgentOrchestrator(options=OrchestratorConfig(
+orchestrator = AgentSquad(options=AgentSquadConfig(
   LOG_AGENT_CHAT=True,
   LOG_CLASSIFIER_CHAT=True,
   LOG_CLASSIFIER_RAW_OUTPUT=True,
@@ -26,14 +25,10 @@ orchestrator = MultiAgentOrchestrator(options=OrchestratorConfig(
   ))
 )
 
-class BedrockLLMAgentCallbacks(AgentCallbacks):
-    def on_llm_new_token(self, token: str) -> None:
-        print(token, end='', flush=True)
-
 orchestrator.add_agent(steak_supervisor_agent)
 # orchestrator.add_agent(steak_supervisor_agent_single)
 
-async def handle_request(_orchestrator: MultiAgentOrchestrator, _user_input: str, _user_id: str, _session_id: str):
+async def handle_request(_orchestrator: AgentSquad, _user_input: str, _user_id: str, _session_id: str):
     response: AgentResponse = await _orchestrator.route_request(_user_input, _user_id, _session_id)
     
     print("\nMetadata:")

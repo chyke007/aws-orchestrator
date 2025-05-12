@@ -1,6 +1,7 @@
-from multi_agent_orchestrator.agents import (BedrockLLMAgent,
-                                             BedrockLLMAgentOptions,
-                                             AgentCallbacks, ChainAgent, ChainAgentOptions)
+from agent_squad.agents import (BedrockLLMAgent,
+                                BedrockLLMAgentOptions,
+                                AgentCallbacks, ChainAgent, ChainAgentOptions)
+
 
 class BedrockLLMAgentCallbacks(AgentCallbacks):
     def on_llm_new_token(self, token: str) -> None:
@@ -10,22 +11,19 @@ class BedrockLLMAgentCallbacks(AgentCallbacks):
 research_agent = BedrockLLMAgent(BedrockLLMAgentOptions(
     name="Research Agent",
     description="Analyzes and validates the given content, expanding on relevant topics and ensuring accuracy.",
-    callbacks=BedrockLLMAgentCallbacks(),
-    streaming=True
+    callbacks=BedrockLLMAgentCallbacks()
 ))
 
 analysis_agent = BedrockLLMAgent(BedrockLLMAgentOptions(
     name="Analysis Agent",
     description="Extracts key insights, trends, and relevant points from the content, identifying core themes.",
-    callbacks=BedrockLLMAgentCallbacks(),
-    streaming=True
+    callbacks=BedrockLLMAgentCallbacks()
 ))
 
 report_agent = BedrockLLMAgent(BedrockLLMAgentOptions(
     name="Report Agent",
     description="Creates a structured report summarizing the research findings and key insights into a coherent format.",
-    callbacks=BedrockLLMAgentCallbacks(),
-    streaming=True
+    callbacks=BedrockLLMAgentCallbacks()
 ))
 
 
