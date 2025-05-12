@@ -1,8 +1,7 @@
 import uuid
 import asyncio
 import sys
-from chained import chain_agent 
-from supervisor import supervisor_agent
+from bedrock_supervisor import (steak_supervisor_agent, steak_supervisor_agent_single)
 
 from multi_agent_orchestrator.orchestrator import MultiAgentOrchestrator, OrchestratorConfig
 from multi_agent_orchestrator.agents import (BedrockLLMAgent,
@@ -31,26 +30,8 @@ class BedrockLLMAgentCallbacks(AgentCallbacks):
     def on_llm_new_token(self, token: str) -> None:
         print(token, end='', flush=True)
 
-football_agent = BedrockLLMAgent(BedrockLLMAgentOptions(
-    name="Football Insights Agent",
-    description="Expert in football analysis, covering team strategies, player stats, match predictions, and historical comparisons.",
-    callbacks=BedrockLLMAgentCallbacks()
-))
-orchestrator.add_agent(football_agent)
-
-life_hack_agent = BedrockLLMAgent(BedrockLLMAgentOptions(
-    name="Life Hacks & Motivation Agent",
-    description="Provides life hacks for efficiency, productivity tips, motivational insights, and goal-setting strategies for self-improvement.",
-    callbacks=BedrockLLMAgentCallbacks()
-))
-orchestrator.add_agent(life_hack_agent)
-
-#Add Chained agent
-# orchestrator.add_agent(chain_agent)
-
-#Add Supervisor agent
-# orchestrator.add_agent(supervisor_agent)
-# orchestrator.add_agent(steak_supervisor_agent)
+orchestrator.add_agent(steak_supervisor_agent)
+# orchestrator.add_agent(steak_supervisor_agent_single)
 
 async def handle_request(_orchestrator: MultiAgentOrchestrator, _user_input: str, _user_id: str, _session_id: str):
     response: AgentResponse = await _orchestrator.route_request(_user_input, _user_id, _session_id)
